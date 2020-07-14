@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use App\Book;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class GetBooksTest extends TestCase
@@ -36,26 +34,6 @@ class GetBooksTest extends TestCase
                     [
                         "data" => [
                             "type" => "books",
-                            "book_id" => $books->first()->id,
-                            "attributes" => [
-                                "isbn" => $books->first()->isbn,
-                                "title" => $books->first()->title,
-                                "description" => $books->first()->description,
-                                // "authors" => [
-                                //     "data" => [
-                                //         "attributes" => [
-                                //             "id" => $user->id,
-                                //             "name" => $user->name,
-                                //             "surname" => $user->surname,
-                                //         ]
-                                //     ]
-                                // ],
-                            ],
-                        ],
-                    ],
-                    [
-                        "data" => [
-                            "type" => "books",
                             "book_id" => $books->last()->id,
                             "attributes" => [
                                 "isbn" => $books->last()->isbn,
@@ -73,10 +51,30 @@ class GetBooksTest extends TestCase
                             ],
                         ],
                     ],
+                    [
+                        "data" => [
+                            "type" => "books",
+                            "book_id" => $books->first()->id,
+                            "attributes" => [
+                                "isbn" => $books->first()->isbn,
+                                "title" => $books->first()->title,
+                                "description" => $books->first()->description,
+                                // "authors" => [
+                                //     "data" => [
+                                //         "attributes" => [
+                                //             "id" => $user->id,
+                                //             "name" => $user->name,
+                                //             "surname" => $user->surname,
+                                //         ]
+                                //     ]
+                                // ],
+                            ],
+                        ],
+                    ],
                     // "links" => [
                     //     "self" => url('/books')
                     // ]
-                ]
+                ],
             ]);
     }
 }
