@@ -13,12 +13,12 @@ export default new VueRouter({
     routes: [
         {
             path: "/",
-            name: "welcome",
+            name: "books",
             component: Books
         },
         {
             path: "/books/add",
-            name: "AddBook",
+            name: "addBooks",
             component: AddBook
         },
         {

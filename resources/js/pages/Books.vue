@@ -1,7 +1,11 @@
 <template>
     <div class="flex flex-col items-center ml-10 py-4">
         <h1 class="text-gray-700 text-3xl mb-4">All Books</h1>
-        <Book />
+        <Book
+            v-for="book in books.data"
+            :key="book.data.book_id"
+            :book="book"
+        />
     </div>
 </template>
 
@@ -9,6 +13,19 @@
 import Book from "../components/Book";
 export default {
     name: "Books",
+    data: () => {
+        return {
+            books: null
+        };
+    },
+    mounted() {
+        axios
+            .get("/api/books")
+            .then(res => {
+                this.books = res.data;
+            })
+            .catch(err => console.log(err));
+    },
     components: {
         Book
     }
