@@ -79,6 +79,12 @@ Run database migrations
 $ php artisan migrate
 ```
 
+Seed database with dummy data
+
+```
+$ php artisan db:seed
+```
+
 Run tests
 
 ```
