@@ -23,14 +23,6 @@ class Review extends JsonResource
                     "review" => $this->review,
                     "comment" => $this->comment,
                     "user" => new UserResource($this->user),
-                    // "user" => [
-                    //     "data" => [
-                    //         "attributes" => [
-                    //             "user_id" => $this->user->id,
-                    //             "name" => $this->user->name,
-                    //         ],
-                    //     ],
-                    // ],
                 ],
             ],
         ];

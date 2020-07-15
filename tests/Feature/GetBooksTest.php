@@ -21,9 +21,6 @@ class GetBooksTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        // $user = factory(User::class)->create();
-        // $this->actingAs($user, 'api');
-
         $books = factory(Book::class, 2)->create();
 
         $response = $this->get('/api/books');
@@ -39,16 +36,11 @@ class GetBooksTest extends TestCase
                                 "isbn" => $books->last()->isbn,
                                 "title" => $books->last()->title,
                                 "description" => $books->last()->description,
-                                // "authors" => [
-                                //     "data" => [
-                                //         "attributes" => [
-                                //             "id" => $user->id,
-                                //             "name" => $user->name,
-                                //             "surname" => $user->surname,
-                                //         ]
-                                //     ]
-                                // ],
+                                "admin_id" => $books->last()->user_id,
                             ],
+                        ],
+                        "links" => [
+                            "self" => url('/books/' . $books->last()->id),
                         ],
                     ],
                     [
@@ -59,21 +51,16 @@ class GetBooksTest extends TestCase
                                 "isbn" => $books->first()->isbn,
                                 "title" => $books->first()->title,
                                 "description" => $books->first()->description,
-                                // "authors" => [
-                                //     "data" => [
-                                //         "attributes" => [
-                                //             "id" => $user->id,
-                                //             "name" => $user->name,
-                                //             "surname" => $user->surname,
-                                //         ]
-                                //     ]
-                                // ],
+                                "admin_id" => $books->last()->user_id,
                             ],
                         ],
+                        "links" => [
+                            "self" => url('/books/' . $books->first()->id),
+                        ],
                     ],
-                    // "links" => [
-                    //     "self" => url('/books')
-                    // ]
+                    "links" => [
+                        "self" => url('/books'),
+                    ],
                 ],
             ]);
     }

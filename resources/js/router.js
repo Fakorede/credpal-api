@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
 import Login from "./pages/Login";
+import { longStackSupport } from "q";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,10 @@ export default new VueRouter({
             name: "login",
             component: Login,
             meta: { title: "Login Page" }
+        },
+        {
+            path: "/signout",
+            name: "logout"
         }
     ]
 });

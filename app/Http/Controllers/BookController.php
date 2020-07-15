@@ -6,14 +6,46 @@ use App\Admin;
 use App\Book;
 use App\Http\Resources\Book as BookResource;
 use App\Http\Resources\BookCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookController extends Controller
 {
     public function index()
     {
-        return new BookCollection(Book::all());
+        if (request()->has('filter')) {
+
+            $filter = request()->get('filter');
+            $books = Book::with('admin')->where('title', 'LIKE', '%' . $filter . '%')
+                ->get();
+
+            return new BookCollection($books);
+
+        } else if (request()->has('sortColumn')) {
+
+            if(request()->has('sortDirection') && request()->get('sortDirection') == 'ASC') {
+                $attr = request()->get('sortColumn');
+                $books = Book::with('admin')->get();
+                $books = $books->sortBy($attr);
+
+                return new BookCollection($books);
+            }
+
+            $attr = request()->get('sortColumn');
+            $books = Book::with('admin')->get();
+            $books = $books->sortByDesc($attr);
+
+            return new BookCollection($books);
+
+        } else {
+
+            $books = Book::with('admin')->paginate(10);
+            return new BookCollection($books);
+
+        }
+
     }
+
 
     public function store()
     {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Admin as AdminResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Book extends JsonResource
@@ -22,10 +22,8 @@ class Book extends JsonResource
                 "attributes" => [
                     "isbn" => $this->isbn,
                     "title" => $this->title,
-                    "description" =>$this->description,
-                    // "authors" => [
-                    //     new AdminResource($this->admin),
-                    // ],
+                    "description" => $this->description,
+                    "admin_id" => new AdminResource($this->admin),
                 ],
             ],
             "links" => [

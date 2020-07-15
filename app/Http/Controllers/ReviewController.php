@@ -8,13 +8,19 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function store(Book $book)
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function store($id)
     {
         $data = request()->validate([
             'review' => 'required|integer',
             'comment' => 'required|string',
-            'book_id' => 'required',
         ]);
+
+        $book = Book::findorfail($id);
 
         $review = $book->reviews()->create(array_merge($data, [
             'user_id' => auth()->user()->id,

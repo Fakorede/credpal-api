@@ -16,12 +16,12 @@
                 class="px-6 h-full border-b-2 border-blue-500 flex items-center"
                 >Home</router-link
             >
-            <router-link to="/" class="px-6 h-full flex items-center"
+            <router-link to="/books/add" class="px-6 h-full flex items-center"
                 >New Post</router-link
             >
         </div>
         <div class="w-1/3 flex justify-end">
-            <router-link to="/" class="px-6 h-full flex items-center"
+            <router-link to="/logout" class="px-6 h-full flex items-center"
                 >Logout</router-link
             >
         </div>
@@ -37,21 +37,6 @@ export default {
             authUser: "authUser"
         })
     }
-    // data: () => {
-    //     return {
-    //         user: null
-    //     };
-    // },
-    // mounted() {
-    //     axios
-    //         .get("/api/auth-user")
-    //         .then(res => {
-    //             this.user = res.data;
-    //         })
-    //         .catch(err => {
-    //             console.log("Unable to fetch authenticated user.");
-    //         });
-    // }
 };
 </script>
 

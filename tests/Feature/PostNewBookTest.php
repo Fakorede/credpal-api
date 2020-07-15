@@ -51,7 +51,7 @@ class PostNewBookTest extends TestCase
                         "isbn" => "9788328302341",
                         "title" => "Clean code",
                         "description" => "Lorem ipsum",
-                        // "admin_id" => $admin->id
+                        "admin_id" => $admin->id,
                     ],
                 ],
                 "links" => [
