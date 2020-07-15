@@ -39,7 +39,7 @@ class BookController extends Controller
 
         } else {
 
-            $books = Book::with('admin')->paginate(10);
+            $books = Book::with(['admin', 'reviews'])->paginate(10);
             return new BookCollection($books);
 
         }

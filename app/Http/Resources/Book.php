@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\Admin as AdminResource;
+use App\Review;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Book extends JsonResource
@@ -24,6 +25,10 @@ class Book extends JsonResource
                     "title" => $this->title,
                     "description" => $this->description,
                     "admin_id" => new AdminResource($this->admin),
+                    "reviews" => [
+                        "avg" => Review::avg('review'),
+                        "count" => $this->reviews->count()
+                    ]
                 ],
             ],
             "links" => [
