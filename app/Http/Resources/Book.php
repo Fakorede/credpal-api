@@ -24,7 +24,7 @@ class Book extends JsonResource
                     "title" => $this->title,
                     "description" =>$this->description,
                     // "authors" => [
-                    //     new UserResource($this->user),
+                    //     new AdminResource($this->admin),
                     // ],
                 ],
             ],

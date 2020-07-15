@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Admin;
 use App\Book;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -24,8 +24,8 @@ class PostNewBookTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create();
-        $this->actingAs($user, 'api');
+        $admin = factory(Admin::class)->create();
+        $this->actingAs($admin, 'admin');
 
         $response = $this->post('/api/books', [
             "data" => [
@@ -34,14 +34,14 @@ class PostNewBookTest extends TestCase
                     "isbn" => "9788328302341",
                     "title" => "Clean code",
                     "description" => "Lorem ipsum",
-                    // "authors" => [$user->id],
+                    // "authors" => [$admin->id],
                 ],
             ],
         ]);
 
         $book = Book::first();
 
-        $this->assertEquals($user->id, $book->user_id);
+        $this->assertEquals($admin->id, $book->admin_id);
         $this->assertEquals("9788328302341", $book->isbn);
         $this->assertEquals("Clean code", $book->title);
         $this->assertEquals("Lorem ipsum", $book->description);
@@ -58,9 +58,9 @@ class PostNewBookTest extends TestCase
                         // "authors" => [
                         //     "data" => [
                         //         "attributes" => [
-                        //             "id" => $user->id,
-                        //             "name" => $user->name,
-                        //             "surname" => $user->surname,
+                        //             "id" => $admin->id,
+                        //             "name" => $admin->name,
+                        //             "surname" => $admin->surname,
                         //         ]
                         //     ]
                         // ],

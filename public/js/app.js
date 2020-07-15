@@ -1962,8 +1962,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Book"
+  name: "Book",
+  props: ["book"]
 });
 
 /***/ }),
@@ -2113,9 +2127,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Books",
+  data: function data() {
+    return {
+      books: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/api/books").then(function (res) {
+      _this.books = res.data;
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  },
   components: {
     Book: _components_Book__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -37795,7 +37827,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "bg-white rounded shadow w-full mt-1 overflow-hidden" },
+    [
+      _c("div", { staticClass: "flex flex-col p-4" }, [
+        _c("div", { staticClass: "ml-6" }, [
+          _c("div", { staticClass: "text-2xl" }, [
+            _vm._v("\n                Book Title:\n                "),
+            _c("span", { staticClass: "font-bold" }, [
+              _vm._v(_vm._s(_vm.book.data.attributes.title))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _vm._v("\n                Isbn:\n                "),
+            _c("span", { staticClass: "text-sm text-gray-600" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.book.data.attributes.isbn) +
+                  "\n                "
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-4 ml-6" }, [
+          _c("span", { staticClass: "text-2xl" }, [_vm._v("Description: ")]),
+          _c("br"),
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.book.data.attributes.description) +
+              "\n        "
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -37804,40 +37874,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "bg-white rounded shadow w-full mt-1 overflow-hidden" },
+      { staticClass: "flex justify-between border-1 border-gray-400 m-4" },
       [
-        _c("div", { staticClass: "flex flex-col p-4" }, [
-          _c("div", { staticClass: "ml-6" }, [
-            _c("div", { staticClass: "font-bold" }, [_vm._v("Book Title")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-sm text-gray-600" }, [
-              _vm._v("isbn")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mt-4" }, [
-            _vm._v("\n            Book description\n        ")
-          ])
+        _c("div", { staticClass: "ml-6" }, [
+          _vm._v("\n            Written by: "),
+          _c("span", { staticClass: "font-bold" }, [_vm._v("Book Author")])
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "flex justify-between border-1 border-gray-400 m-4" },
-          [
-            _c("div", [
-              _vm._v("Written by: "),
-              _c("span", { staticClass: "font-bold" }, [_vm._v("Book Author")])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("div", [_c("p", [_vm._v("Average ratings: ⭐⭐⭐")])])
-            ]),
-            _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [
-              _vm._v("Submit Review")
-            ])
-          ]
-        )
+        _c("div", [_c("div", [_c("p", [_vm._v("Average ratings: ⭐⭐⭐")])])]),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("Submit Review")])
       ]
     )
   }
@@ -38095,9 +38141,11 @@ var render = function() {
         _vm._v("All Books")
       ]),
       _vm._v(" "),
-      _c("Book")
+      _vm._l(_vm.books.data, function(book) {
+        return _c("Book", { key: book.data.book_id, attrs: { book: book } })
+      })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -54168,11 +54216,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   mode: "history",
   routes: [{
     path: "/",
-    name: "welcome",
+    name: "books",
     component: _pages_Books__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: "/books/add",
-    name: "AddBook",
+    name: "addBooks",
     component: _pages_AddBook__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: "/home",

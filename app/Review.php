@@ -5,7 +5,7 @@ namespace App;
 use App\Scopes\LatestScope;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Review extends Model
 {
     /**
      * The attributes that aren't mass assignable.
@@ -14,14 +14,14 @@ class Book extends Model
      */
     protected $guarded = [];
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function reviews()
+    public function book()
     {
-        return $this->hasMany(Review::class);
+        return $this->belongsTo(Book::class);
     }
 
     protected static function boot()
