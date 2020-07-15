@@ -1,0 +1,29 @@
+const state = {
+    title: "Welcome"
+};
+
+const actions = {
+    setPageTitle({ commit, state }, title) {
+        commit("setTitle", title);
+    }
+};
+
+const getters = {
+    pageTitle: state => {
+        return state.title;
+    }
+};
+
+const mutations = {
+    setTitle(state, title) {
+        state.title = title;
+        document.title = state.title;
+    }
+};
+
+export default {
+    state,
+    getters,
+    actions,
+    mutations
+};

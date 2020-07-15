@@ -29,8 +29,29 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-    name: "Nav"
+    name: "Nav",
+    computed: {
+        ...mapGetters({
+            authUser: "authUser"
+        })
+    }
+    // data: () => {
+    //     return {
+    //         user: null
+    //     };
+    // },
+    // mounted() {
+    //     axios
+    //         .get("/api/auth-user")
+    //         .then(res => {
+    //             this.user = res.data;
+    //         })
+    //         .catch(err => {
+    //             console.log("Unable to fetch authenticated user.");
+    //         });
+    // }
 };
 </script>
 

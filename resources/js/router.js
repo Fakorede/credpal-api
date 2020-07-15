@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
@@ -14,22 +13,26 @@ export default new VueRouter({
         {
             path: "/",
             name: "books",
-            component: Books
+            component: Books,
+            meta: { title: "Books Page" }
         },
         {
             path: "/books/add",
             name: "addBooks",
-            component: AddBook
+            component: AddBook,
+            meta: { title: "Add New Book" }
         },
         {
             path: "/home",
             name: "home",
-            component: Home
+            component: Home,
+            meta: { title: "Home Page" }
         },
         {
             path: "/signin",
             name: "login",
-            component: Login
+            component: Login,
+            meta: { title: "Login Page" }
         }
     ]
 });

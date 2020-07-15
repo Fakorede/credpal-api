@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded shadow w-full mt-1 overflow-hidden">
+    <div class="bg-white rounded shadow w-full mt-1 mr-10 overflow-hidden">
         <div class="flex flex-col p-4">
             <div class="ml-6">
                 <div class="text-2xl">
@@ -15,7 +15,7 @@
                     </span>
                 </div>
             </div>
-            <div class="mt-4 ml-6">
+            <div class="mt-4 ml-6 mr-6">
                 <span class="text-2xl">Description: </span><br />
                 {{ book.data.attributes.description }}
             </div>
@@ -30,7 +30,7 @@
                     <p>Average ratings: ⭐⭐⭐</p>
                 </div>
             </div>
-            <button type="submit">Submit Review</button>
+            <button type="submit" class="mr-6">Submit Review</button>
         </div>
     </div>
 </template>

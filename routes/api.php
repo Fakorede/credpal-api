@@ -14,3 +14,6 @@ Route::middleware('auth:admin')->group(function() {
 Route::middleware('auth:api')->group(function() {    
     Route::post('/books/{id}/reviews', 'BookController@store');
 });
+
+
+Route::get("auth-user", "AuthUserController@show");
