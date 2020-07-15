@@ -1998,6 +1998,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2040,8 +2047,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BookForm"
+  name: "BookForm",
+  data: function data() {
+    return {
+      user: authUser.data.user_id
+    };
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    authUser: "authUser" // authUser.data.user_id
+
+  })), {}, {
+    bookIsbn: {
+      get: function get() {
+        return this.$store.getters.bookIsbn;
+      },
+      set: function set(bookIsbn) {
+        this.$store.commit("updateIsbn", bookIsbn);
+      }
+    },
+    bookTitle: {
+      get: function get() {
+        return this.$store.getters.bookTitle;
+      },
+      set: function set(bookTitle) {
+        this.$store.commit("updateTitle", bookTitle);
+      }
+    },
+    bookDescription: {
+      get: function get() {
+        return this.$store.getters.bookDescription;
+      },
+      set: function set(bookDescription) {
+        this.$store.commit("updateDescription", bookDescription);
+      }
+    },
+    bookAuthor: {
+      get: function get() {
+        return this.$store.getters.bookAuthor;
+      },
+      set: function set(user) {
+        this.$store.commit("updateAuthor", user);
+      }
+    }
+  })
 });
 
 /***/ }),
@@ -2152,7 +2211,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Book__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Book */ "./resources/js/components/Book.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Book */ "./resources/js/components/Book.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2166,28 +2232,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Books",
-  data: function data() {
-    return {
-      books: null,
-      loading: true
-    };
-  },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/api/books").then(function (res) {
-      _this.books = res.data;
-      _this.loading = false;
-    })["catch"](function (err) {
-      console.log("Unable to fetch books at this time.");
-      _this.loading = false;
-    });
+    this.$store.dispatch("fetchBooks");
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    books: "books",
+    booksStatus: "booksStatus"
+  })),
   components: {
-    Book: _components_Book__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Book: _components_Book__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -37930,92 +37987,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "flex items-center justify-center h-full" },
-      [
-        _c("div", { staticClass: "flex max-w-5xl" }, [
-          _c("div", { staticClass: "bg-white w-full p-8" }, [
-            _c(
-              "h1",
-              { staticClass: "text-gray-700 text-3xl text-center mb-4" },
-              [_vm._v("\n                Add New Book\n            ")]
-            ),
+  return _c("div", { staticClass: "flex items-center justify-center h-full" }, [
+    _c("div", { staticClass: "flex max-w-5xl" }, [
+      _c("div", { staticClass: "bg-white w-full p-8" }, [
+        _c("h1", { staticClass: "text-gray-700 text-3xl text-center mb-4" }, [
+          _vm._v("\n                Add New Book\n            ")
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "text-gray-600",
+            attrs: { action: "#", method: "post" }
+          },
+          [
+            _c("div", { staticClass: "my-5" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.bookIsbn,
+                    expression: "bookIsbn"
+                  }
+                ],
+                staticClass:
+                  "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
+                attrs: {
+                  type: "text",
+                  placeholder: "Book ISBN",
+                  name: "isbn",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.bookIsbn },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.bookIsbn = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "text-gray-600",
-                attrs: { action: "#", method: "post" }
-              },
-              [
-                _c("div", { staticClass: "my-5" }, [
-                  _c("input", {
-                    staticClass:
-                      "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Book ISBN",
-                      name: "isbn",
-                      autofocus: ""
+            _c("div", { staticClass: "my-5" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.bookTitle,
+                    expression: "bookTitle"
+                  }
+                ],
+                staticClass:
+                  "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
+                attrs: {
+                  type: "text",
+                  placeholder: "Book Title",
+                  name: "title"
+                },
+                domProps: { value: _vm.bookTitle },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-5" }, [
-                  _c("input", {
-                    staticClass:
-                      "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Book Title",
-                      name: "title"
+                    _vm.bookTitle = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "my-5" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.bookDescription,
+                    expression: "bookDescription"
+                  }
+                ],
+                staticClass:
+                  "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
+                attrs: {
+                  name: "description",
+                  id: "",
+                  placeholder: "Add Book Details"
+                },
+                domProps: { value: _vm.bookDescription },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-5" }, [
-                  _c("textarea", {
-                    staticClass:
-                      "border-rounded w-full py-2 px-4 outline-none focus:shadow-outline",
-                    attrs: {
-                      name: "description",
-                      id: "",
-                      placeholder: "Add Book Details"
+                    _vm.bookDescription = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "my-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "border-rounded border-blue-700 bg-blue-600 text-white w-full py-2",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$store.dispatch("addBook")
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "my-3" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "border-rounded border-blue-700 bg-blue-600 text-white w-full py-2",
-                      attrs: { type: "submit" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Add\n                    "
-                      )
-                    ]
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                        Add Book\n                    "
                   )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
-  }
-]
+                ]
+              )
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38162,7 +38262,7 @@ var render = function() {
         _vm._v("All Books")
       ]),
       _vm._v(" "),
-      _vm.loading
+      _vm.booksStatus === "loading"
         ? _c("p", [_vm._v("Loading Books...")])
         : _vm._l(_vm.books.data, function(book) {
             return _c("Book", { key: book.data.book_id, attrs: { book: book } })
@@ -55446,6 +55546,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/user */ "./resources/js/store/modules/user.js");
 /* harmony import */ var _modules_title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/title */ "./resources/js/store/modules/title.js");
+/* harmony import */ var _modules_books__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/books */ "./resources/js/store/modules/books.js");
+
 
 
 
@@ -55454,9 +55556,111 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     User: _modules_user__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Books: _modules_books__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/books.js":
+/*!*********************************************!*\
+  !*** ./resources/js/store/modules/books.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var state = {
+  books: null,
+  booksStatus: null,
+  //loading state
+  bookIsbn: "",
+  bookTitle: "",
+  bookDescription: "",
+  bookAuthor: ""
+};
+var actions = {
+  fetchBooks: function fetchBooks(_ref) {
+    var commit = _ref.commit,
+        state = _ref.state;
+    commit("setBooksStatus", "loading");
+    axios.get("/api/books").then(function (res) {
+      commit("setBooks", res.data);
+      commit("setBooksStatus", "success");
+    })["catch"](function (err) {
+      commit("setBooksStatus", "error");
+    });
+  },
+  addBook: function addBook(_ref2) {
+    var commit = _ref2.commit,
+        state = _ref2.state;
+    commit("setBooksStatus", "loading");
+    axios.post("/api/books", _defineProperty({
+      isbn: state.bookIsbn,
+      title: state.bookTitle,
+      description: state.bookDescription
+    }, "title", state.bookTitle)).then(function (res) {
+      commit("addBook", res.data);
+      commit("updateIsbn", "");
+      commit("updateTitle", "");
+      commit("updateDescription", "");
+      commit("updateAuthor", "");
+    })["catch"](function (err) {});
+  }
+};
+var getters = {
+  books: function books(state) {
+    return state.books;
+  },
+  booksStatus: function booksStatus(state) {
+    return state.booksStatus;
+  },
+  bookIsbn: function bookIsbn(state) {
+    return state.bookIsbn;
+  },
+  bookTitle: function bookTitle(state) {
+    return state.bookTitle;
+  },
+  bookDescription: function bookDescription(state) {
+    return state.bookDescription;
+  },
+  bookAuthor: function bookAuthor(state) {
+    return state.bookAuthor;
+  }
+};
+var mutations = {
+  setBooks: function setBooks(state, books) {
+    state.books = books;
+  },
+  setBooksStatus: function setBooksStatus(state, status) {
+    state.booksStatus = status;
+  },
+  updateIsbn: function updateIsbn(state, isbn) {
+    state.bookIsbn = isbn;
+  },
+  updateTitle: function updateTitle(state, title) {
+    state.bookTitle = title;
+  },
+  updateDescription: function updateDescription(state, description) {
+    state.bookDescription = description;
+  },
+  updateAuthor: function updateAuthor(state, author) {
+    state.bookAuthor = author;
+  },
+  addBook: function addBook(state, book) {
+    state.books.data.unshift(book);
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 

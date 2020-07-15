@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\Book;
 use App\Http\Resources\Book as BookResource;
 use App\Http\Resources\BookCollection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookController extends Controller
 {
@@ -16,14 +18,25 @@ class BookController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'data.attributes.isbn' => '',
-            'data.attributes.title' => '',
-            'data.attributes.description' => '',
+            'isbn' => 'required|unique:books',
+            'title' => 'required',
+            'description' => 'required',
+            'admin_id' => 'required',
         ]);
 
-        // dd($data);
+        try {
+            $author = Admin::findOrFail($data['admin_id']);
 
-        $book = request()->user()->books()->create($data['data']['attributes']);
+            if ($author) {
+                $book = request()->user()->books()->create($data);
+                return response(new BookResource($book), 201);
+            }
+
+        } catch (ModelNotFoundException $ex) {
+            throw $ex;
+        }
+
+        $book = request()->user()->books()->create($data);
 
         return response(new BookResource($book), 201);
     }

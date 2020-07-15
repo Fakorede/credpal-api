@@ -28,19 +28,15 @@ class PostNewBookTest extends TestCase
         $this->actingAs($admin, 'admin');
 
         $response = $this->post('/api/books', [
-            "data" => [
-                "type" => "books",
-                "attributes" => [
-                    "isbn" => "9788328302341",
-                    "title" => "Clean code",
-                    "description" => "Lorem ipsum",
-                    // "authors" => [$admin->id],
-                ],
-            ],
+            "isbn" => "9788328302341",
+            "title" => "Clean code",
+            "description" => "Lorem ipsum",
+            // "admin_id" => $admin->id,
         ]);
 
         $book = Book::first();
 
+        $this->assertCount(1, Book::all());
         $this->assertEquals($admin->id, $book->admin_id);
         $this->assertEquals("9788328302341", $book->isbn);
         $this->assertEquals("Clean code", $book->title);
@@ -55,20 +51,58 @@ class PostNewBookTest extends TestCase
                         "isbn" => "9788328302341",
                         "title" => "Clean code",
                         "description" => "Lorem ipsum",
-                        // "authors" => [
-                        //     "data" => [
-                        //         "attributes" => [
-                        //             "id" => $admin->id,
-                        //             "name" => $admin->name,
-                        //             "surname" => $admin->surname,
-                        //         ]
-                        //     ]
-                        // ],
+                        // "admin_id" => $admin->id
                     ],
                 ],
                 "links" => [
                     "self" => url('/books/' . $book->id),
                 ],
             ]);
+    }
+
+    /** @test */
+    public function only_valid_admin_users_can_be_made_author()
+    {
+        $this->withoutExceptionHandling();
+
+        $admin = factory(Admin::class)->create();
+        $this->actingAs($admin, 'admin');
+
+        $response = $this->post('/api/books', [
+            "data" => [
+                "type" => "books",
+                "attributes" => [
+                    "isbn" => "9788328302341",
+                    "title" => "Clean code",
+                    "description" => "Lorem ipsum",
+                    "authors" => [123],
+                ],
+            ],
+        ])->assertStatus(404);
+
+        $this->assertNull(Book::first());
+    }
+
+    /** @test */
+    public function admin_id_is_required_for_adding_books()
+    {
+        $this->withoutExceptionHandling();
+
+        $admin = factory(Admin::class)->create();
+        $this->actingAs($admin, 'admin');
+
+        $response = $this->post('/api/books', [
+            "data" => [
+                "type" => "books",
+                "attributes" => [
+                    "isbn" => "9788328302341",
+                    "title" => "Clean code",
+                    "description" => "Lorem ipsum",
+                    "admin_id" => '',
+                ],
+            ],
+        ]);
+
+        // dd($response->getContent());
     }
 }

@@ -57,6 +57,22 @@ DB_USERNAME=your_db_username
 DB_PASSWORD=your_db_password
 ```
 
+Passport setup
+
+Create keys:
+
+```
+php artisan passport:install
+```
+
+Add keys to .env
+
+```
+PASSPORT_GRANT_TYPE=password
+PASSPORT_CLIENT_ID=2
+PASSPORT_CLIENT_SECRET=
+```
+
 Run database migrations
 
 ```
